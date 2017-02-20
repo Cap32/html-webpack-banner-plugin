@@ -1,6 +1,6 @@
 {
   "name": "html-webpack-banner-plugin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Adds a banner to the top of generated html",
   "scripts": {
     "start": "npm test -- -w",
