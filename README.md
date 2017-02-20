@@ -41,7 +41,7 @@ plugins: [
 
 #### Options
 
-```json
+```js
 {
     banner: string, // the banner as string, it will be wrapped in a comment
     raw: boolean, // if true, banner will not be wrapped in a comment
