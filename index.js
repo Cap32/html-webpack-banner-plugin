@@ -7,7 +7,7 @@ function HtmlWebpackBannerPlugin(options) {
 
 HtmlWebpackBannerPlugin.prototype.apply = function (compiler) {
 	var banner = this.options.banner || '';
-	var raw = (this.options.raw !== false);
+	var raw = this.options.raw;
 	var event = 'html-webpack-plugin-after-html-processing';
 	compiler.plugin('compilation', function (compilation) {
 		compilation.plugin(event, function (htmlPluginData, callback) {

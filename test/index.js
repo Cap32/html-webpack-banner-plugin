@@ -32,30 +32,30 @@ describe('html-webpack-banner-plugin', function () {
 	});
 
 	it('banner', function (done) {
-		var banner = '<!-- it works -->';
+		var banner = 'it works';
 		webpack(config({
 			banner: banner,
 		}), function (err) {
 			var htmlFile = inDir('dist/index.html');
 			var html = fs.readFileSync(htmlFile, 'utf-8');
-			var regExp = new RegExp('^' + banner);
-			assert(!err);
+			var regExp = new RegExp('^<\!--' + banner + '-->');
 			assert(regExp.test(html));
+			assert(!err);
 			done();
 		});
 	});
 
 	it('raw: false', function (done) {
-		var banner = 'it works';
+		var banner = '<!-- it works -->';
 		webpack(config({
 			banner: banner,
-			raw: false,
+			raw: true,
 		}), function (err) {
 			var htmlFile = inDir('dist/index.html');
 			var html = fs.readFileSync(htmlFile, 'utf-8');
-			var regExp = new RegExp('^<\!--' + banner + '-->');
-			assert(!err);
+			var regExp = new RegExp('^' + banner);
 			assert(regExp.test(html));
+			assert(!err);
 			done();
 		});
 	});
