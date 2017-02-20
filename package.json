@@ -1,0 +1,20 @@
+{
+  "name": "html-webpack-banner-plugin",
+  "version": "0.0.0",
+  "description": "Adds a banner to the top of generated html",
+  "scripts": {
+    "start": "npm test -- -w",
+    "test": "mocha test"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Cap32/html-webpack-banner-plugin.git",
+  "author": "Cap32 <webb.png@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "html-webpack-plugin": "^2.28.0",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.6.0",
+    "webpack": "^2.2.1"
+  }
+}
