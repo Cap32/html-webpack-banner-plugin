@@ -7,6 +7,16 @@
     "test": "mocha test"
   },
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "webpack",
+    "html",
+    "banner",
+    "html-webpack-plugin",
+    "plugin"
+  ],
   "repository": "https://github.com/Cap32/html-webpack-banner-plugin.git",
   "author": "Cap32 <webb.png@gmail.com>",
   "license": "MIT",
