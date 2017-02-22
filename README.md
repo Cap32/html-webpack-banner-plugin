@@ -1,5 +1,7 @@
 # html-webpack-banner-plugin
 
+[![Build Status](https://travis-ci.org/Cap32/html-webpack-banner-plugin.svg?branch=master)](https://travis-ci.org/Cap32/html-webpack-banner-plugin)
+
 This is an extension plugin for the [webpack](http://webpack.github.io) plugin [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) - a plugin that simplifies the creation of HTML files to serve your webpack bundles.
 
 Adds a banner to the top of generated html.
