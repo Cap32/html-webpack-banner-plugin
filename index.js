@@ -1,43 +1,51 @@
 'use strict';
 
-function HtmlWebpackBannerPlugin(options)
-{
+function HtmlWebpackBannerPlugin(options) {
 	this.options = options || {};
 }
 
-HtmlWebpackBannerPlugin.prototype.apply = function (compiler)
-{
+HtmlWebpackBannerPlugin.prototype.apply = function (compiler) {
 	var banner = this.options.banner || '';
 	var raw = this.options.raw;
-	var event = 'html-webpack-plugin-after-html-processing';
-	var hook = 'htmlWebpackPluginAfterHtmlProcessing';
+	var processingEvent = 'html-webpack-plugin-after-html-processing';
+	var processingHook = 'htmlWebpackPluginAfterHtmlProcessing';
+	var pluginHook = 'HtmlWebpackBannerPlugin';
+	var callCompilation;
 
 	// Backwards compatible
-	(compiler.hooks ?
-			compiler.hooks.compilation.tap.bind(compiler.hooks.compilation, 'HtmlWebpackBannerPlugin') :
-			compiler.plugin.bind(compiler, 'compilation')
-	)(function (compilation)
-	{
+	if (compiler.hooks) {
+		var compilation = compiler.hooks.compilation;
+		callCompilation = compilation.tap.bind(compilation, pluginHook);
+	}
+	else {
+		callCompilation = compiler.plugin.bind(compiler, 'compilation');
+	}
+
+	callCompilation(function (compilation) {
+		var callProcess;
+
 		// Backwards compatible
-		(compiler.hooks ?
-				compilation.hooks[hook].tap.bind(compilation.hooks[hook], 'HtmlWebpackBannerPlugin') :
-				compilation.plugin.bind(compilation, event)
-		)(function (htmlPluginData, callback)
-		{
+		if (compiler.hooks) {
+			var processing = compilation.hooks[processingHook];
+			callProcess = processing.tap.bind(processing, pluginHook);
+		}
+		else {
+			callProcess = compilation.plugin.bind(compilation, processingEvent);
+		}
+
+		callProcess(function (htmlPluginData, callback) {
 			var comment = banner && !raw ? '<!--' + banner + '-->\n' : banner;
 
 			htmlPluginData.html = comment + htmlPluginData.html;
 
-			if(callback)
-			{
+			if (callback) {
 				callback(null, htmlPluginData);
 			}
-			else
-			{
+			else {
 				return htmlPluginData;
 			}
 		});
-	})
+	});
 };
 
 module.exports = HtmlWebpackBannerPlugin;
