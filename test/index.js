@@ -20,7 +20,15 @@ function config(options) {
 			path: inDir('dist'),
 		},
 		plugins: [
-			new HtmlWebpackPlugin(),
+			new HtmlWebpackPlugin({
+				minify: {
+					removeComments: false,
+					removeRedundantAttributes: true,
+					removeScriptTypeAttributes: true,
+					removeStyleLinkTypeAttributes: true,
+					useShortDoctype: true,
+				},
+			}),
 			new HtmlWebpackBannerPlugin(options),
 		],
 	};
