@@ -17,3 +17,4 @@ coverage
 node_modules
 .logs
 lib
+.idea

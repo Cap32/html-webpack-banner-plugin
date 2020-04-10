@@ -1,51 +1,30 @@
 'use strict';
 
-function HtmlWebpackBannerPlugin(options) {
-	this.options = options || {};
-}
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-HtmlWebpackBannerPlugin.prototype.apply = function (compiler) {
-	var banner = this.options.banner || '';
-	var raw = this.options.raw;
-	var processingEvent = 'html-webpack-plugin-after-html-processing';
-	var processingHook = 'htmlWebpackPluginAfterHtmlProcessing';
-	var pluginHook = 'HtmlWebpackBannerPlugin';
-	var callCompilation;
-
-	// Backwards compatible
-	if (compiler.hooks) {
-		var compilation = compiler.hooks.compilation;
-		callCompilation = compilation.tap.bind(compilation, pluginHook);
-	}
-	else {
-		callCompilation = compiler.plugin.bind(compiler, 'compilation');
+class HtmlWebpackBannerPlugin {
+	constructor(options) {
+		this.options = options || {};
 	}
 
-	callCompilation(function (compilation) {
-		var callProcess;
+	apply(compiler) {
+		const banner = this.options.banner || '';
+		const raw = this.options.raw;
 
-		// Backwards compatible
-		if (compiler.hooks) {
-			var processing = compilation.hooks[processingHook];
-			callProcess = processing.tap.bind(processing, pluginHook);
-		}
-		else {
-			callProcess = compilation.plugin.bind(compilation, processingEvent);
-		}
+		compiler.hooks.compilation.tap('HtmlWebpackBannerPlugin', compilation => {
+			const hooks = HtmlWebpackPlugin.getHooks(compilation);
 
-		callProcess(function (htmlPluginData, callback) {
-			var comment = banner && !raw ? '<!--' + banner + '-->\n' : banner;
+			hooks.afterTemplateExecution.tapAsync(
+				'HtmlWebpackBannerPlugin',
+				(htmlPluginData, cb) => {
+					const comment = banner && !raw ? '<!--' + banner + '-->\n' : banner;
 
-			htmlPluginData.html = comment + htmlPluginData.html;
-
-			if (callback) {
-				callback(null, htmlPluginData);
-			}
-			else {
-				return htmlPluginData;
-			}
+					htmlPluginData.html = `${comment}${htmlPluginData.html}`;
+					cb(null, htmlPluginData);
+				}
+			);
 		});
-	});
-};
+	}
+}
 
 module.exports = HtmlWebpackBannerPlugin;
